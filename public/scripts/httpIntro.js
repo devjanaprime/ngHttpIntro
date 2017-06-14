@@ -2,24 +2,18 @@
 var myApp = angular.module( 'myApp', [] );
 
 
-myApp.controller( 'HttpController', function( $http ){
+myApp.controller( 'HttpController', function( SongService ){
   var vm = this;
-  // temp start up function
-  vm.startUpFunction = function(){
-    console.log( 'I am here in startUpFunction!!!' );
-    // get call to /songs
-    $http({
-      method: 'GET',
-      url: '/songs'
-    }).then( function( response ){
-      console.log( 'back with:', response );
-    }); // end http
-  }; // end startUpFunction
+  vm.songList = [];
 
-  vm.otherGet = function(){
-    console.log( 'I am here using the other get syntax' );
-    $http.get( '/songs' ).then( function( response ){
-      console.log( 'back with:', response );
-    });
-  }; // end otherGet
+  console.log(SongService.name);
+
+
+  SongService.getSongs().then(function(whatCameBackFromPromise){
+    console.log(whatCameBackFromPromise);
+    vm.songList = SongService.songList.songs
+  })
+  // temp start up function
+  vm.startUpFunction = SongService.hello;
+
 }); // end HttpController
